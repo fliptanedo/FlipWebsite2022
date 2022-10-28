@@ -9,6 +9,10 @@ last_name: Tanedo
 # Is this the primary user of the site?
 superuser: true
 
+# FOR PEOPLE LAYOUT:
+user_groups:
+- Principal Investigators
+
 # Role/position/tagline
 role: Associate Professor
 
@@ -105,5 +109,6 @@ highlight_name: false
 
 He grew up in Los Angeles and fell in love with physics after reading *The Physics of Star Trek*. This carried into degrees in mathematics and physics at Stanford, Cambridge, Durham, and a Ph.D at Cornell. After a postdoc at UC Irvine, he is faculty at UC Riverside where he is known for being covered in chalk dust after a long day’s work.
 
-{{< icon name="download" pack="fas" >}} Download his {{< staticref "files/Tanedo.pdf" "newtab" >}}CV{{< /staticref >}} | &emsp;
-{{< icon name="user" pack="fas" >}} A professional <a href="./post/bio/">biosketch.</a>.
+{{< icon name="download" pack="fas" >}} Download his {{< staticref "files/Tanedo.pdf" "newtab" >}}CV{{< /staticref >}} 
+&emsp; | &emsp;
+{{< icon name="user" pack="fas" >}} A professional <a href="./post/bio/">biosketch</a>.

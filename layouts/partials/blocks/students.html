@@ -1,0 +1,70 @@
+{{/* FLIP: new template block */}}
+{{/* BASED ON: Wowchemy Blocks: Markdown */}}
+{{/* FLIP: adapting old students.html from 2021  */}}
+{{/* Layout cycles through a list of icons (students)  */}}
+
+{{/* Initialise */}}
+{{ $page := .wcPage }}
+{{ $block := .wcBlock }}
+{{ $columns := $block.Params.design.columns | default "2" }}
+
+
+<div class="row  {{if not $block.Title | or (eq $columns "1") }}justify-content-center{{end}}">
+  {{ if $block.Title }}
+    {{ if eq $columns "1" }}
+      <div class="section-heading col-12 mb-3 text-center">
+        {{ with $block.Title }}<h1 class="mb-0">{{ . | markdownify | emojify }}</h1>{{ end }}
+        {{ with $block.Params.subtitle }}<p class="mt-1">{{ . | markdownify | emojify }}</p>{{ end }}
+      </div>
+    {{else}}
+      <div class="section-heading col-12 col-lg-4 mb-3 mb-lg-0 d-flex flex-column align-items-center align-items-lg-start">
+        {{ with $block.Title }}<h1 class="mb-0">{{ . | markdownify | emojify }}</h1>{{ end }}
+        {{ with $block.Params.subtitle }}<p class="mt-1">{{ . | markdownify | emojify }}</p>{{ end }}
+      </div>
+    {{end}}
+  {{end}}
+<div class="col-12 col-lg-8">
+  {{ $block.Content }}
+
+<!-- FLIP -->
+
+  {{ with $block.Params.mygroup }}
+        <ul class="ul-students">
+          {{ range .students }}
+            <li class="ul-students" title="{{ .name }}">
+              <a href="{{ .website }}"><img class="studentpic" src="{{ $.Site.BaseURL }}img/students/{{ .photo }}"></a>
+            </li>
+          {{ end }}
+        </ul>
+      {{ end }}
+
+
+
+    <p>
+      <span class="comment">* - co-advised,  ◊ - postdoc, † - undergraduate, ‡ - high-school, § - visiting</span>
+    </p>
+
+    <div class="row comment">
+      <h5>Past Students</h5>
+    </div>
+
+    {{ with $block.Params.mygroup }}
+      {{ range .oldstudents }}
+        <div class="row comment">
+          <div class="col-xs-3">
+            <a href="{{ .website }}" class=comment>
+              {{ .name }}&nbsp;
+            </a>
+          </div>
+          <div class="col-xs-3">
+            {{ .start }} - {{ .end }}&nbsp;
+          </div>
+          <div class="col-xs-6">
+            {{ .position }}, {{ .role }}
+          </div>
+        </div>
+      {{ end }}
+    {{ end }}
+<!-- FLIP -->
+
+</div>

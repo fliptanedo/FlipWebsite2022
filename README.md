@@ -9,9 +9,31 @@ See `AcademicTheme_Readme.md` for the Hugo Academic Resumé template information
 
 Old versions: [2021](https://github.com/fliptanedo/tanedo-website-2021/blob/master/README.md) | [2020](https://github.com/fliptanedo/flip-www-2020).
 
-## Oct 9, where I stopped:
+## Useful References
 
-Tried to copy `layouts` from the 2021 site and it didn't work. On the one hand, I believe that the template lookup order is working properly now (unlike in 2021). On the other hand, I think I have to start from scratch with this shit. 
+* The [Hugo Directory Structure](https://gohugo.io/getting-started/directory-structure/) 
+
+  * All paths are relative to the project root
+
+* [Extending Wowchemy](https://wowchemy.com/docs/hugo-tutorials/extending-wowchemy/)
+
+  ```
+  To override a template in the theme, you simply copy the file you are interested in from the version of the Wowchemy module your site uses and paste it in your site folder using a similar path. To choose your version, select its tag from GitHub’s dropdown master box on the upper left and press enter.
+  ```
+
+* [TOML vs YAML formatting for markdown files](https://gohugo.io/content-management/front-matter/)
+
+* [Wowchemy Page Builder](https://wowchemy.com/docs/getting-started/page-builder/)
+
+* [Wowchemy theme customization](https://wowchemy.com/docs/getting-started/customization/#custom-theme)
+
+* [Convert TOML to YAML](https://www.convertsimple.com/convert-toml-to-yaml/)
+
+## Notes for next time
+
+* The default widget template is `demo-links.md`. This is written in TOML, while the other widgets are in YAML. It may be nice to convert them all to YAML. The difference is the format of the [header material](https://gohugo.io/content-management/front-matter/). [Conversion tool](https://www.convertsimple.com/convert-toml-to-yaml/).
+* I may want to properly upgrade my custom css to [scss](https://www.geeksforgeeks.org/what-is-the-difference-between-css-and-scss/).
+* Teaching section should have an "old classes" part. Currently the number of icons is getting a bit long. Would like a short list of older classes that doesn't take up much room. Could even use a bit of Bootstrap CSS to make it a two column list. 
 
 ## Quick Start from Scratch
 
@@ -56,20 +78,6 @@ You have to restart the Terminal app.
 * I backed up some old sites in `./static/archived/`. These show up under `./archived/` when uploaded. Should I link to them? These archived sites are a huge pain. They take up a large amount of space. I think it's from the saved pdfs of talks. I think there should be a better way of archiving these in the future.
 * There are a bunch of image files that are much larger than they need to be. The media folder is around 50 mb. I should make small versions of the images.
 
-## Useful References
-
-* The [Hugo Directory Structure](https://gohugo.io/getting-started/directory-structure/) 
-
-  * All paths are relative to the project root
-
-* [Extending Wowchemy](https://wowchemy.com/docs/hugo-tutorials/extending-wowchemy/)
-
-  ```
-  To override a template in the theme, you simply copy the file you are interested in from the version of the Wowchemy module your site uses and paste it in your site folder using a similar path. To choose your version, select its tag from GitHub’s dropdown master box on the upper left and press enter.
-  ```
-
-  
-
 
 ## Transferring assets
 
@@ -78,6 +86,8 @@ All paths in this document are relative to the project root, `FlipWebsite2022/`
 ### Background 
 
 All paths are supposed to be relative to the project root. We want to create a `./layouts/` folder and so that Hugo will look here for templates and shortcodes first. This over-rides any files from the theme. Last time, this did not quite work, see [Modifying Modules](https://gohugo.io/hugo-modules/use-modules/#make-and-test-changes-in-a-module). It seems, though, that this is now fixed. 
+
+... except for the fact that the [path to the homepage template html files](https://github.com/wowchemy/wowchemy-hugo-themes/tree/main/modules/wowchemy/layouts/partials/blocks) has changed. 
 
 ### Default layout templates
 
@@ -172,22 +182,86 @@ Go to `./config/_defaut/` and manually transfer the configuration data from the 
 
 Comment: if the light-mode page looks weird, it's likely because of settings in `./assets/scss/custom.scss`. 
 
-Fixing the themes.
+### Comment: light/dark mode toggle 
 
-[Wowchemy themes](https://github.com/wowchemy/wowchemy-hugo-themes/tree/main/modules/wowchemy/data/themes)
+I'm curious about the light/dark toggle. These show up in `./config/_default/params.yaml`
 
+```
+appearance:
+  theme_day: minimal
+  theme_night: minimal
+  font: minimal
+  font_size: L
+```
 
+```
+show_day_night: true
+```
 
-[Theme customization](https://wowchemy.com/docs/getting-started/customization/#custom-theme)
+Here's how to make [your own theme via Wowchemy](https://wowchemy.com/docs/getting-started/customization/#custom-theme). I currently have a `fliptheme.toml` in there... but there are a lot of edits needed in `./assets/scss/custom.css`. 
 
+It looks like one can use [hugo code in the css file](https://discourse.gohugo.io/t/how-to-use-hugo-template-variables-in-css/4464), though the source is old. (Update: [better discussion here](https://discourse.gohugo.io/t/trying-to-make-theme-colors-configurable-in-css-with-hugo-pipes-but-getting-a-css-syntax-error/26739); looks like the thing to search for is CSS and Hugo Pipes.)
 
+* Some discussion about [lightmode/darkmode images](lightmode/darkmode images), including a nice hack for SVG images (of which I have none).
+* Could also have two copies of the css file, one for light/dark. But now this doubles the work of updating the css. What would be better is if we used scss and had some Hugo code at the top that defines the colors. 
+* Most likely I should leave this to a future revision. 
+* Can probably use `invert()` to deal with images using css? See [this discussion](https://developer.mozilla.org/en-US/docs/Web/CSS/filter-function/invert). 
 
-### TO DO NEXT
+### Widgets
 
-Transfer over bits of the layouts. But first I should transfer the assets. 
+Let's go through each widget one at a time. We'll fix the layouts and the widgets simultaneously.
 
-#### Widget Content
+General changes since 2022:
 
-Transfer `./content/home` . This *will* break the page because you're calling . You can use the line `active = false` in the markdown files to turn widgets off for now.
+* Holy shit, the widget tempalte htmls moved. They are now in `wowchemy-hugo-themes/modules/wowchemy/layouts/partials/blocks/` (link to [GitHub](https://github.com/wowchemy/wowchemy-hugo-themes/tree/main/modules/wowchemy/layouts/partials/blocks)). What this means for us: I'm going to go ahead and copy the above folder into `./layouts/partials/blocks/`. We will edit these copies directly. Information about editing the [Wowchemy blocks](https://wowchemy.com/blocks/).
+* When editing the layout files, note that `$page.Content` is now `$block.Content`.
+* The blank template layout (previously `./layouts/partials/block.html`) is now `./layouts/partials/blocks/markdown.html`.
+  * **However**: tweaking this template is annoying because the `markdown` widget is one of a small number of official widgets that gets to access the two-column layout in `./layouts/partials/functions/parse_block.html`. See discussion below on two-column widgets. I'm going to make a new template.
 
-### 
+* The replacement for `blank.md` is `demo-links.md`. That's a handy one to keep in the `./content/home` folder. Remember to toggle the `active` option. Unlike the other template markdown files, `demo-links.md` uses TOML rather than YAML. [Hugo help page on this](https://gohugo.io/content-management/front-matter/).
+
+I can now go through each of the old widgets and adapt any edits I made. Because I learned my lesson in the past, I marked any edits with comments along the lines of `<!-- BEGIN FLIP EDIT -->` and `<!-- END FLIP EDIT -->`.
+
+#### Two column widget: new template
+
+There's something weird going on with havin two column widgets/blocks. Make a copy of `./layouts/partials/blocks/markdown.html` and rename it, say to `test.html` in the same diretory. If I make a new block (`./content/home/test.md`)  and have it call the `markdown` widget, there are no problems: I get a two-column widget with the block title and subtitle printed in the left column. 
+
+However, if I call the `test` widget instead of `markdown` in `test.md`, the left column completely disappears. This appears to be because `markdown.html` knows nothing about the first column. That appears to be in `./layouts/partials/functions/parse_block.html`. ([Source here](https://github.com/wowchemy/wowchemy-hugo-themes/blob/main/modules/wowchemy/layouts/partials/functions/parse_block.html).)
+
+The issue seems to be a  specific line that only allows certain classes of blocks to use columns. This is silly:
+
+```
+{{ $use_cols := in (slice "collection" "experience" "accomplishments" "contact" "markdown" "tag_cloud" "portfolio") $block_type }}
+```
+
+The `$use_cols` flag is used to print the damn left column. This is stupid. I could override the `parse_block.html` file. However, that's another layer of tweaking the original code that I would rather not get into. 
+
+Instead, I'll make a new template file for sections. It is straightforward to copy the relevant code from `parse_block.html` into a copy of `markdown.html`. 
+
+#### Tips
+
+* You can use the line `active = false` in the markdown files to turn widgets off for now.
+* Save often and check the demo page (you are running `hugo server -D`, right?) to make sure nothing broke. 
+* Sometimes you have to restart the server if Hugo has beocme hopelessly confused.
+* Slider page doesn't have a demo. See [Wowchemy demo](https://github.com/wowchemy/wowchemy-hugo-themes/blob/main/starters/research-group/content/tour/slider.md?plain=1) or [info page](https://wowchemy.com/blocks/slider/). Don't forget the hack on the slider.html layout to include the image credit. Make sure the `item.credit` attribute is indented properly.
+* The intended default tempalte is **`demo-links.md`** as your default template. I should make my own that uses my revised template that defaults to allowing the two column option.
+* Wowchemy has a new **people widget** which is a cute way of doing what I was previously doing with custom code. I can learn a lot from the template code. 
+
+# Deployment
+
+The most straightforward deployment is to run `hugo` and then upload the `./public/` folder via SSH or SFTP. 
+
+Wowchemy recommends deploying with Netlify: this syncs your local directory with GitHub, and then deploys the `./public/` folder to a netlify web address. I have found it tricky to figure ot how to sync my university address to the netlify web address. 
+
+My current setup is that my university gives me web space on an AWS server. 
+
+* To explore: I may be able to still [sync to GitHub with AWS](https://aws.amazon.com/blogs/devops/integrating-with-github-actions-ci-cd-pipeline-to-deploy-a-web-app-to-amazon-ec2/). [Tutorial from AWS](https://aws.amazon.com/getting-started/hands-on/host-static-website/).
+* [2020 unofficial tutorial](https://samwelek.co.uk/2020/10/05/how-to-host-your-static-website-on-aws-with-github-actions/)
+
+# Troubleshooting
+
+[Wowchemy troubleshooting page](https://wowchemy.com/docs/hugo-tutorials/troubleshooting/).
+
+* `Error: from config: failed to resolve output format "headers" from site config`
+  * [Wowchemy docs on this](https://wowchemy.com/docs/hugo-tutorials/troubleshooting/#error-failed-to-resolve-output-format); for me `hugo mod clean --all` ended up solving the problem
+  * Discussions: [GitHub](https://github.com/wowchemy/wowchemy-hugo-themes/discussions/2800), [Nov 2021](https://user.it.uu.se/~justin/Hugo/post/hugo_module_fail/), [in Mandarin](https://zenn.dev/meihei/articles/32bb275f71e938), [Hugo issue and CTA](https://github.com/gohugoio/hugo/issues/10208), 

@@ -1,0 +1,87 @@
+{{/* Wowchemy Blocks: Markdown */}}
+{{/* Documentation: https://wowchemy.com/blocks/ */}}
+{{/* License: https://github.com/wowchemy/wowchemy-hugo-themes/blob/main/LICENSE.md */}}
+
+{{/* Initialise */}}
+{{ $page := .wcPage }}
+{{ $block := .wcBlock }}
+{{ $columns := $block.Params.design.columns | default "2" }}
+
+<!-- FLIP: ALL NEW -->
+<div class="row">
+  <!-- FIRST COLUMM -->
+  <div class="col-12 col-lg-4 section-heading text-center">
+    {{ with $block.Title }}
+      <h2>{{ . | markdownify | emojify }}</h2>
+    {{ end }}
+    <!--  -->
+    {{ with $block.Params.subtitle }}
+      <p>{{ . | markdownify | emojify }}</p>
+    {{ end }}
+      <!-- FLIP -->
+      <p>
+        <a class="btn btn-outline-primary btn-xs" href="{{ $block.Params.cv_pdf }}">
+          Download Complete CV
+        </a>
+      </p>
+      {{ if $block.Params.group_logo }}
+      <p>
+        <img class="sidebarpic" src="{{ $block.Params.group_logo }}">
+        <meta itemprop="image" content="{{ $block.Params.group_logo }}">
+      </p>
+      {{ end }}
+      <!-- /FLIP -->
+  </div>
+  <!-- SECOND COLUMN -->
+  <div class="col-12 col-lg-8">
+    {{ $block.Content }}
+
+    <div class="row">
+
+      {{ with $block.Params.interests }}
+      <div class="col-md-5">
+        <h3>{{ i18n "interests" | markdownify }}</h3>
+        <ul class="ul-interests">
+          {{ range .interests }}
+          <li>{{ . | markdownify }}</li>
+          {{ end }}
+        </ul>
+      </div>
+      {{ end }}
+
+      {{ with $block.Params.education }}
+      <div class="col-md-7">
+        <h3>{{ i18n "education" | markdownify }}</h3>
+        <ul class="ul-edu fa-ul">
+          {{ range .courses }}
+            {{ if .logo }}
+              <img src="{{ $.Site.BaseURL }}img/{{ .logo }}" style="height:1rem; float: left; padding-right: 10px;">
+            {{ else }}
+              <i class="fa-li fas fa-graduation-cap"></i>
+            {{ end }}
+            <div class="description">
+              {{ .course_short }}
+              {{ with .institution_short }}, {{ . }}{{ end }}
+              {{ with .year }}({{ . }}){{ end }}
+              <br />
+            </div>
+          {{ end }}
+        </ul>
+      </div>
+      {{ end }}
+
+      </div>
+     {{ with $block.Params.service }}
+      <p style="font-size: .8rem;">
+        <b>Service</b>:
+        {{ range .service }}
+        {{ . | markdownify }} &middot;
+        {{ end }}
+      </p>
+      {{ end }}
+      <!-- /FLIP -->
+    </div>
+
+  </div>
+</div>
+<!-- /FLIP -->

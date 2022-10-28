@@ -1,0 +1,31 @@
+{{/* FLIP: new template block */}}
+{{/* BASED ON: Wowchemy Blocks: Markdown */}}
+{{/* The issue is that the markdown block template  */}}
+{{/* has no explicit code for the left column.  */}}
+{{/* This code is hidden in pase_block.html and  */}}
+{{/* only accessible to the official blocks.  */}}
+{{/* ONLY for 2 column layout  */}}
+
+{{/* Initialise */}}
+{{ $page := .wcPage }}
+{{ $block := .wcBlock }}
+{{ $columns := $block.Params.design.columns | default "2" }}
+
+
+<div class="row  {{if not $block.Title | or (eq $columns "1") }}justify-content-center{{end}}">
+  {{ if $block.Title }}
+    {{ if eq $columns "1" }}
+      <div class="section-heading col-12 mb-3 text-center">
+        {{ with $block.Title }}<h1 class="mb-0">{{ . | markdownify | emojify }}</h1>{{ end }}
+        {{ with $block.Params.subtitle }}<p class="mt-1">{{ . | markdownify | emojify }}</p>{{ end }}
+      </div>
+    {{else}}
+      <div class="section-heading col-12 col-lg-4 mb-3 mb-lg-0 d-flex flex-column align-items-center align-items-lg-start">
+        {{ with $block.Title }}<h1 class="mb-0">{{ . | markdownify | emojify }}</h1>{{ end }}
+        {{ with $block.Params.subtitle }}<p class="mt-1">{{ . | markdownify | emojify }}</p>{{ end }}
+      </div>
+    {{end}}
+  {{end}}
+<div class="col-12 col-lg-8">
+  {{ $block.Content }}
+</div>

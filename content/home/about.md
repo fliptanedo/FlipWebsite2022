@@ -10,9 +10,9 @@ active: true
 headless: true
 
 # Order that this section appears on the page.
-weight: 20
+weight: 10
 
-title: Biography
+title: 
 
 # Choose the user profile to display
 # This should be the username (folder name) of a profile in your `content/authors/` folder.
@@ -20,4 +20,4 @@ title: Biography
 author: admin
 ---
 
-
+Flip is the first Filipino-American professor of particle physics. He runs a Physical Science book club (Phy-Sci) at his local independent book store. He enjoys swimming, basketball, and speculative fiction.
