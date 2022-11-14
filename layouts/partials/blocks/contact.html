@@ -2,6 +2,12 @@
 {{/* Documentation: https://wowchemy.com/blocks/ */}}
 {{/* License: https://github.com/wowchemy/wowchemy-hugo-themes/blob/main/LICENSE.md */}}
 
+<!-- FLIP -->
+{{ $email1 := site.Params.email1 }}
+{{ $email2 := site.Params.email2 }}
+{{ $email3 := site.Params.email3 }}
+<!-- /FLIP -->
+
 {{/* Initialise */}}
 {{ $page := .wcPage }}
 {{ $block := .wcBlock }}
@@ -78,14 +84,35 @@
 
   <ul class="fa-ul">
 
-    {{ if $data.email }}
+<!-- FLIP: comment out -->
+<!--     {{ if $data.email }}
     <li>
       <i class="fa-li fas fa-envelope fa-2x" aria-hidden="true"></i>
       <span id="person-email">
       {{- if $autolink }}<a href="mailto:{{ $data.email }}">{{ $data.email }}</a>{{ else }}{{ $data.email }}{{ end -}}
       </span>
     </li>
+    {{ end }} -->
+<!-- /FLIP -->
+<!-- FLIP: add new stuff -->
+<!-- {{ $copyright_license := .Params.copyright.license | default site.Params.footer.copyright.license }} -->
+    {{ with $email1 }}
+      <li>
+        <i 
+          class="fa-li fas fa-envelope fa-2x" 
+          aria-hidden="true"></i>
+        <span id="person-email" itemprop="email">
+          <a 
+            data-name="{{ $email1 }}" 
+            data-domain="{{ $email2 }}" 
+            data-tld="{{ $email3 }}" 
+            href="#" 
+            class="cryptedmail" 
+            onclick="window.location.href = 'mailto:' + this.dataset.name + '@' + this.dataset.domain + '.' + this.dataset.tld"></a>
+        </span>
+      </li>
     {{ end }}
+<!-- /FLIP -->
 
     {{ with $data.phone }}
     <li>

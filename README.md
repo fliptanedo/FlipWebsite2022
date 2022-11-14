@@ -158,6 +158,12 @@ Transfer the `./static` folder. This one has lots of potentially large files. It
 
 **Remark:** the archived sites should not be in `./static` . There needs to be a better way to archive them elsewhere. 
 
+#### Shortcodes
+
+Copy:`./layouts/shortcodes/`
+
+These give shotcodes for twitter and for email.
+
 #### Content
 
 Transfer the folders from `./content/post` which contain the pages beyond the front page. I use these "blog posts" for my design portfolio.
@@ -237,6 +243,14 @@ The issue seems to be a  specific line that only allows certain classes of block
 The `$use_cols` flag is used to print the damn left column. This is stupid. I could override the `parse_block.html` file. However, that's another layer of tweaking the original code that I would rather not get into. 
 
 Instead, I'll make a new template file for sections. It is straightforward to copy the relevant code from `parse_block.html` into a copy of `markdown.html`. 
+
+#### flipportfolio widget
+
+I think the portfolio widget was updated, so I hacked together a `./layouts/partials/blocks/flipportfolio.html` widget using the older style.
+
+#### contact widget
+
+Copy over edits. 
 
 #### Tips
 

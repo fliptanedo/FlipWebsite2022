@@ -1,30 +1,24 @@
-+++
-widget = "markdown"  # See https://wowchemy.com/docs/page-builder/
-headless = true  # This file represents a page section.
-active = true  # Activate this widget? true/false
-weight = 50  # Order that this section will appear.
+---
+widget: markdown
+headless: true
+active: true
+weight: 50
+title: Recent Talks
+subtitle: ''
+design:
+  columns: '2'
+  text_color_light: true
+  spacing:
+    padding:
+      - 20px
+      - '0'
+      - 20px
+      - '0'
+advanced:
+  css_style: ''
+  css_class: ''
 
-title = "Recent Talks"
-subtitle = ""
-
-[design]
-  # Choose how many columns the section has. Valid values: 1 or 2.
-  columns = "2"
-  
-  # Text color (true=light or false=dark).
-  text_color_light = true
-
-[design.spacing]
-  # Customize the section spacing. Order is top, right, bottom, left.
-  padding = ["20px", "0", "20px", "0"]
-
-[advanced]
- # Custom CSS. 
- css_style = ""
- 
- # CSS class.
- css_class = ""
-+++
+---
 
 ## Research Talks
 
