@@ -6,9 +6,9 @@
 # Appearance
 
 appearance:
-  theme_day: minimal
-  theme_night: minimal
-  font: minimal
+  theme_day: fliptheme
+  theme_night: fliptheme
+  font: 'flipfont'
   font_size: L
 
 # SEO
@@ -35,7 +35,7 @@ header:
     align: r
     show_logo: true
     show_language: false
-    show_day_night: true
+    show_day_night: false
     show_search: false
     highlight_active_link: true
 

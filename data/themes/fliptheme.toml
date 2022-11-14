@@ -1,20 +1,56 @@
+# OLD VERSION:
+# # Theme metadata
+# name = "fliptheme"
+
+# # Is theme light or dark?
+# light = true
+
+# # Primary
+# primary = "#4caf50"
+# primary_light = "#6ec6ff"
+# primary_dark = "#0069c0"
+
+# # Menu
+# menu_primary = "#333333"
+# menu_text = "#fff"
+# menu_text_active = "#4caf50"
+# menu_title = "#fff"
+
+# # Home sections
+# home_section_odd = "rgb(255, 255, 255)"
+# home_section_even = "rgb(247, 247, 247)"
+
+
 # Theme metadata
 name = "fliptheme"
 
-# Is theme light or dark?
-light = true
+[light]
+  # Primary
+  primary = "#4caf50"
 
-# Primary
-primary = "#4caf50"
-primary_light = "#6ec6ff"
-primary_dark = "#0069c0"
+  # Menu
+  menu_primary = "#fff"
+  menu_text = "#fff"
+  menu_text_active = "#4caf50"
+  menu_title = "#fff"
 
-# Menu
-menu_primary = "#333333"
-menu_text = "#fff"
-menu_text_active = "#4caf50"
-menu_title = "#fff"
+  # Home sections
+  home_section_odd = "rgb(255, 255, 255)"
+  home_section_even = "rgb(247, 247, 247)"
 
-# Home sections
-home_section_odd = "rgb(255, 255, 255)"
-home_section_even = "rgb(247, 247, 247)"
+[dark]
+  # Primary
+  primary = "#4caf50"
+
+  # Menu
+  menu_primary = "#333333"
+  menu_text = "#fff"
+  menu_text_active = "#4caf50"
+  menu_title = "#fff"
+
+  # Home sections
+  home_section_odd = "rgb(255, 255, 255)"
+  home_section_even = "rgb(247, 247, 247)"
+
+  link = "#bbdefb"
+  link_hover = "#bbdefb"

@@ -261,6 +261,86 @@ Copy over edits.
 * The intended default tempalte is **`demo-links.md`** as your default template. I should make my own that uses my revised template that defaults to allowing the two column option.
 * Wowchemy has a new **people widget** which is a cute way of doing what I was previously doing with custom code. I can learn a lot from the template code. 
 
+### Layout
+
+I have now transferred the content over. At the moment the page looks like this:
+![image-20221113172532974](/Users/flip/Documents/Website/FlipWebsite2022/README.assets/image-20221113172532974.png)
+
+#### Font
+
+[Instructions from Wowchemy](https://wowchemy.com/docs/getting-started/customization/#custom-font).
+
+There is a font file in `./data/fonts/flipfont.toml` with the information. 
+
+In `./config/_default/params.yaml` we activate the font:
+
+```
+appearance:
+  theme_day: minimal
+  theme_night: minimal
+  font: 'flipfont'
+  font_size: L
+```
+
+#### Light/Dark Mode
+
+Turn off the navbar light/dark toggle in `./config/_default/params.yaml`:
+
+```
+header:
+  navbar:
+    enable: true
+    align: r
+    show_logo: true
+    show_language: false
+    show_day_night: false
+    show_search: false
+    highlight_active_link: true
+```
+
+Make sure we've trasnverred over `./data/themes/fliptheme.toml` which contains color information. I had to revise this due to a change in how Wowchemy does light and dark themes. The easiest way to do thi sis to start from the new [`minimal.toml` template](https://github.com/wowchemy/wowchemy-hugo-themes/blob/main/modules/wowchemy/data/themes/minimal.toml).
+
+```
+# Theme metadata
+name = "fliptheme"
+
+# Is theme light or dark?
+light = true
+
+# Primary
+primary = "#4caf50"
+primary_light = "#6ec6ff"
+primary_dark = "#0069c0"
+
+# Menu
+menu_primary = "#333333"
+menu_text = "#fff"
+menu_text_active = "#4caf50"
+menu_title = "#fff"
+
+# Home sections
+home_section_odd = "rgb(255, 255, 255)"
+home_section_even = "rgb(247, 247, 247)"
+```
+
+And then update the themes in `./config/_default/params.yaml`:
+
+```
+appearance:
+  theme_day: fliptheme
+  theme_night: fliptheme
+  font: 'flipfont'
+  font_size: L
+```
+
+
+
+#### Fixing the colors:
+
+Somehow the background color for odd-numbered setions is very dark. I believe this is just the background color that I set somewhere. 
+
+![image-20221114093832357](/Users/flip/Documents/Website/FlipWebsite2022/README.assets/image-20221114093832357.png)
+
 # Deployment
 
 The most straightforward deployment is to run `hugo` and then upload the `./public/` folder via SSH or SFTP. 
