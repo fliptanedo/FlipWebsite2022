@@ -7,8 +7,9 @@
 
 appearance:
   theme_day: fliptheme
-  theme_night: fliptheme
-  font: 'flipfont'
+  # theme_day: mimimal
+  # theme_night: fliptheme
+  font: flipfont
   font_size: L
 
 # SEO
@@ -62,7 +63,8 @@ locale:
 features:
   syntax_highlighter:
     theme_light: github-light
-    theme_dark: dracula
+    # theme_dark: dracula
+    theme_dark: github-light
   math:
     enable: true
   privacy_pack:

@@ -29,11 +29,25 @@ Old versions: [2021](https://github.com/fliptanedo/tanedo-website-2021/blob/mast
 
 * [Convert TOML to YAML](https://www.convertsimple.com/convert-toml-to-yaml/)
 
+* [Emoji in Hugo](https://www.webfx.com/tools/emoji-cheat-sheet/)
+
 ## Notes for next time
 
 * The default widget template is `demo-links.md`. This is written in TOML, while the other widgets are in YAML. It may be nice to convert them all to YAML. The difference is the format of the [header material](https://gohugo.io/content-management/front-matter/). [Conversion tool](https://www.convertsimple.com/convert-toml-to-yaml/).
 * I may want to properly upgrade my custom css to [scss](https://www.geeksforgeeks.org/what-is-the-difference-between-css-and-scss/).
 * Teaching section should have an "old classes" part. Currently the number of icons is getting a bit long. Would like a short list of older classes that doesn't take up much room. Could even use a bit of Bootstrap CSS to make it a two column list. 
+* The 2021 Readme has a note about making a local copy of wowchemy and making a replacement:
+  ```
+  replace github.com/wowchemy/wowchemy-hugo-modules/wowchemy => /Users/flip/Documents/Website/wowchemy-hugo-modules-main/wowchemy
+  ```
+
+  I have not had to use this hack this time around, but wanted to make a note of it in case I will need to get back to this in the future. I believe it had to do with [Modifying modules.](https://gohugo.io/hugo-modules/use-modules/#make-and-test-changes-in-a-module) 
+
+### From 2021 "Notes for next time"
+
+* I backed up some old sites in `./static/archived/`. These show up under `./archived/` when uploaded. I probably should link to them.
+  * These archived sites are a huge pain. They take up a large amount of space. I think it's from the saved pdfs of talks. I think there should be a better way of archiving these in the future.
+* ~~There are a bunch of image files that are much larger than they need to be. The media folder is around 50 mb. I should make small versions of the images.~~
 
 ## Quick Start from Scratch
 
@@ -72,11 +86,6 @@ export PATH=$PATH:/usr/local/go/bin
 ```
 
 You have to restart the Terminal app.
-
-## Notes from last time 
-
-* I backed up some old sites in `./static/archived/`. These show up under `./archived/` when uploaded. Should I link to them? These archived sites are a huge pain. They take up a large amount of space. I think it's from the saved pdfs of talks. I think there should be a better way of archiving these in the future.
-* There are a bunch of image files that are much larger than they need to be. The media folder is around 50 mb. I should make small versions of the images.
 
 
 ## Transferring assets
@@ -298,7 +307,13 @@ header:
     highlight_active_link: true
 ```
 
-Make sure we've trasnverred over `./data/themes/fliptheme.toml` which contains color information. I had to revise this due to a change in how Wowchemy does light and dark themes. The easiest way to do thi sis to start from the new [`minimal.toml` template](https://github.com/wowchemy/wowchemy-hugo-themes/blob/main/modules/wowchemy/data/themes/minimal.toml).
+Furtherfrom [Wowchemy personalization page](https://wowchemy.com/docs/getting-started/customization/#fonts):
+
+> Otherwise, to force your visitors to see either a light or dark theme, set only a day *or* night theme, but *not* both.
+
+That is: comment out the `theme_night` option in `params.yaml`. This overrides the `show_day_night` toggle and forces the page to only give light mode.
+
+Make sure we've trasnsferred over `./data/themes/fliptheme.toml` which contains color information. I had to revise this due to a change in how Wowchemy does light and dark themes. The easiest way to do this is to start from the new [`minimal.toml` template](https://github.com/wowchemy/wowchemy-hugo-themes/blob/main/modules/wowchemy/data/themes/minimal.toml).
 
 ```
 # Theme metadata
@@ -340,6 +355,203 @@ appearance:
 Somehow the background color for odd-numbered setions is very dark. I believe this is just the background color that I set somewhere. 
 
 ![image-20221114093832357](/Users/flip/Documents/Website/FlipWebsite2022/README.assets/image-20221114093832357.png)
+
+Here's what I wrote in the 2021 readme:
+
+> There are two major design edits here. They're a bit of a pain to implement, but that's my hubris for you. Note: the copy of `./layouts/_default/baseof.html` that we put in here is now outdated. Let's start by placing the most updated version, which we will shortly edit.  
+>
+> Make sure you have included `/layouts/_default/baseof.html` from the previous site. 
+>
+> 1. **We want the background of the `<body>` to be dark gray.** Aesthetically we want the background to be white. However, the navigation bar and footer will be dark gray. What this means is that if one over-scrolls (pulls above or below the main page by a little) then you get a bit of white pulling from under the footer or from above the navigation bar. This looks distracting, so we're going to jump through some hoops. This involves:
+>
+>    a) setting the `<body>` background to be dark gray. If you've copied over the style files, this should already be active.
+>
+>    b) creating a new `<div id="THECONTENT">` that has a white background. All of the sections will be inside this division. Over scrolling, however, will pull more space from *outside* this division, which will be dark gray.
+>
+> 2. **We want the fancy footer**. I have a neat Feynman diagram footer graphic that I like.  Observe that the `<div class="container">` that encloses the footer does not spread across the entire navigator width.  The `container` class is something inherited from Bootstrap, the responsive design grid system that *Academic* is built upon.
+>
+>    We have to place additional `<div>`s just around and above the footer. 
+>
+> Bonus: at this stage you can also put in the `baseof.html` code for a watermark.
+>
+> In earlier steps we defined the locations of the graphics in `params.yaml`
+
+The file we'd like to edit is `./layouts/_default/baseof.html`. As I was hacking this together, what was useful for me was to have a clean copy of the Wowchemy template files, see *Default Layout Templates* above. That way I can just transfer files as needed. 
+
+The relevant edits are:
+
+```
+  {{ partial "search" . }}
+
+  {{ if .Params.announcement.text -}}
+    {{ partial "components/announcement_bar" . }}
+  {{ end -}}
+
+<!-- FLIP: FOR WATERMARK -->
+<div id="watermark" style="background-image:url('{{ $.Site.BaseURL }}/img/{{ .Site.Params.watermark }}');"></div>
+<!-- /FLIP --> 
+
+  <div class="page-header header--fixed">
+    {{ partial "navbar" . }}
+  </div>
+
+<!-- FLIP: opened a new div for framing -->
+<div id="THECONTENT">
+<!-- Closed below; see flip2019.css -->
+<!-- /FLIP -->
+
+  <div class="page-body">
+    {{/* Breadcrumb */}}
+    {{/* Don't apply to Book layout as that has different breadcrumb placement. */}}
+    {{ if .Params.show_breadcrumb | and (ne .Type "book") }}
+      <!-- Use page bg color rather than any color applied to article-container. -->
+      {{ $class := cond .IsSection "universal-wrapper" "article-container" }}
+      <div class="{{$class}} py-1" style="background: initial">
+        {{ partial "components/breadcrumb" . }}
+      </div>
+    {{ end }}
+
+    {{ block "main" . }}{{ end }}
+  </div>
+
+  <div class="page-footer">
+    {{/* Docs and Updates layouts include the site footer in a different location. */}}
+    {{ if not (in (slice "book" "docs" "updates") .Type) }}
+<!-- FLIP -->
+    <div style="position: relative; width: 0; height: 0">
+      <div id="feynmanfoot" style="background-image:url('{{ $.Site.BaseURL }}/img/{{ .Site.Params.footmark }}');"></div>
+    </div>
+    <div id="botbar1"></div>
+    <!-- -- -->
+    <div id="FOOTERBAR"> 
+    <!-- closed after container -->
+<!-- /FLIP -->
+    <div class="container">
+      {{ partial "site_footer" . }}
+    </div>
+<!-- FLIP -->
+    </div> <!-- closes div FOOTERBAR -->
+<!-- /FLIP -->
+    {{ end }}
+  </div>
+
+<!-- FLIP -->
+</div> <!-- closes id="THECONTENT" -->
+<!-- /FLIP -->
+
+  {{ partial "site_js" . }}
+
+</body>
+</html>
+
+```
+
+This is a good checkpoint: things are starting to look whole except for some calibration:
+![image-20221114173452231](/Users/flip/Documents/Website/FlipWebsite2022/README.assets/image-20221114173452231.png)
+
+Let's go ahead and fix this height. Edit `./assets/scss/custom.scss` and fiddle with the `top` padding.
+
+```
+#botbar1{
+  /* This is the horizontal line */
+	background-color:#C1BBAB;
+	margin: 0;
+	padding: 0;
+  	position:relative;
+  	top: 70px;
+	left: 0px;
+	z-index: 9;
+	height: 7px;
+	width: 100%;
+}
+```
+
+You also have to fix `#feynmanfoot` just below in the same file.
+
+#### Navbar
+
+If I haven't yet, now is a good time to update the menu items.
+
+One relatively new problem: There was a weird problem where the **hamburger menu** was giving me white text on a white background for light mode. 
+
+Copying the Bootstrap 4 update note from the 2021 Readme:
+
+> The **breakpoint** of a navigation bar is the window width at which the bar collapses into the familiar "three horizontal bars" symbol for an expanding menu. Bootstrap 4 makes this easy. [Here's how it works](https://stackoverflow.com/a/36289507/4812646):
+>
+> > Changing the navbar breakpoint is easier in Bootstrap 4 using the navbar-expand-* classes:
+>
+> ```html
+> <nav class="navbar fixed-top navbar-expand-sm">..</nav>
+> ```
+>
+> The options are
+>
+> - `navbar-expand-sm`: mobile menu on xs screens <576px
+> - `navbar-expand-md`: mobile menu on sm screens <768px
+> - `navbar-expand-lg`: mobile menu on md screens <992px
+> - `navbar-expand-xl`: mobile menu on lg screens <1200px
+> - `navbar-expand`: never use mobile menu
+> - *(no expand class)* = always use mobile menu
+>
+> The relevant line shows up at the top of `themes/academic/layouts/partials/navbar.html`. You know what that means: make a copy of that file in `/layouts/partials/` and change 
+>
+> ```html
+> <nav class="navbar navbar-light fixed-top navbar-expand-lg py-0 compensate-for-scrollbar" id="navbar-main">
+> ```
+>
+> to
+>
+> ```html
+> <nav class="navbar navbar-light fixed-top navbar-expand-md py-0 compensate-for-scrollbar" id="navbar-main">
+> ```
+>
+> You can use `navbar-expand-sm` if your menu is particularly brief. 
+>
+> By the way, this is also *way* easier than it used to be in Bootstrap 3, remember to be grateful.
+
+Copy `./layouts/partials/navbar.html` (e.g. copy from `./layouts_templates/...`)
+
+Fixing the weird dropdown menu styling may need direct hacking of the style file. Here's [the source on GitHub](https://github.com/wowchemy/wowchemy-hugo-themes/blob/main/modules/wowchemy/assets/scss/main.scss).
+
+... I'm not actually sure what fixed this. Restarting Hugo helped. The behavior is still a little different in Safari versus Chrome. I think this is some residual cache thing.
+
+#### Footer
+
+Copy over `./layouts/partials/site_footer.html` from the template. We are commenting out everything in the `footer` tag and replacing it with new stuff.
+
+We insert the following 3-column code:
+
+```
+<div class="row" id="footer-columns">
+  <div class="col-md-4" id="footer-col-1">
+    <img src="{{ $.Site.BaseURL }}img/{{ $.Site.Params.mylogo }}" class="center-me">
+  </div>
+  <div class="col-md-4" id="footer-col-1">
+    <img src="{{ $.Site.BaseURL }}img/{{ $.Site.Params.midlogo }}" class="center-me">
+  </div>
+  <div class="col-md-4" id="footer-col-1">
+    <p class="powered-by">
+    {{ with site.Copyright }}{{ replace . "{year}" now.Year | markdownify}} &middot; {{ end }}
+
+    Published with G. Cushen's
+    <a href="https://github.com/wowchemy/wowchemy-hugo-modules" target="_blank" rel="noopener">wowchemy</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    {{ if ne .Type "docs" }}
+    <span class="float-right" aria-hidden="true">
+      <a href="#" id="back_to_top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    {{ end }}
+  </p>
+  </div>
+</div>
+```
+
+
 
 # Deployment
 

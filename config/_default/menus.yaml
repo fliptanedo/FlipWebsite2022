@@ -7,9 +7,30 @@ main:
   - name: Home
     url: '#about'
     weight: 10
-  - name: Gallery
-    url: '#gallery'
+  - name: CV
+    url: '#CV'
+    weight: 20
+  - name: Research
+    url: '#researchslide'
+    weight: 30
+  - name: Talks
+    url: '#talks'
+    weight: 50
+  - name: Teaching
+    url: '#teaching'
     weight: 60
+  - name: Team
+    url: '#team'
+    weight: 130
+  - name: Public
+    url: '#twitter'
+    weight: 150
+  - name: Design
+    url: '#design'
+    weight: 170
+  - name: Contact
+    url: '#contact'
+    weight: 200
 
 # Link to a PDF of your resume/CV from the menu.
 # To enable, copy your resume/CV to `static/uploads/resume.pdf` and uncomment the lines below.
